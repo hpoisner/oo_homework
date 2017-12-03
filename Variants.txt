@@ -1,0 +1,8 @@
+chr1	500000	A	G	Person_A
+chr1	800000	C	T	Person_A
+chr10	8889990	G	T	Person_C
+chr77	5	G	T	Person_C
+chr8	100000000000	G	T	Person_F
+chr9	777	G	M	Person_B
+chr10	999444	F	T	Person_D
+chr1 	800000	T	C	Person_A
