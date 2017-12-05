@@ -64,10 +64,10 @@ class load_information(object):
     
 
 
-all_people = load_information.load_people('/Users/hpois/Documents/BMI_Software_Engineering/People.txt')
+all_people = load_information.load_people('People.txt')
 #print(all_people)
-valid_chromosome = load_information.load_validchroms('/Users/hpois/Documents/BMI_Software_Engineering/uscschromosomes.txt')
-all_variants = load_information.load_variants('/Users/hpois/Documents/BMI_Software_Engineering/Variants.txt')
+valid_chromosome = load_information.load_validchroms('uscschromosomes.txt')
+all_variants = load_information.load_variants('Variants.txt')
 print(all_variants)
 
 

@@ -56,13 +56,19 @@ class Person(object):
         if gender == 'F' or gender == 'f' or gender == 'female':
             self.gender = 'female'
             
-            
-        for person_variant in range(len(variant_list)):
-            for other_variant in range(len(variant_list)):
-                if variant_list[person_variant] != variant_list[other_variant]:
-                    if variant_list[person_variant][0:2] == variant_list[other_variant][0:2]:
-                        self.variant_list.remove(variant_list[person_variant])
-                        self.variant_list.remove(variant_list[other_variant])
+    
+    def verify_variant(self):
+        all_variants = [variant[0:2] for variant in self.variant_list]
+        copy_variants = [item for item in self.variant_list]
+        seen = set()
+        seen_add = seen.add
+        bad_index = [idx for idx,item in ennumerate(all_variants) if item in seen or seen_add(item)]
+        for index in sorted(bad_index, reverse=True):
+            print('Removing the repeated variant', copy_variants[index])
+            del copy_variants[index]
+        self.variant_list = copy_variants    
+        
+        
                                                                         
                                                                                                                                        
                     

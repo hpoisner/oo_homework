@@ -9,15 +9,8 @@ class Variant(object):
         self.alt_all = alt_all
         self.name = name
         
-    @staticmethod    
-    def load_validchroms(path):
-        chrom_list = []
-        with open(path) as valid_chromosomes:
-            for line in valid_chromosomes:
-                line = line.strip('\n').split('\t')
-                chrom_list.append(line)
-        return(chrom_list)
         
+   
             
     def __str__(self):
         """ Provides a string representation of the variant
@@ -30,34 +23,40 @@ class Variant(object):
             self.name)
     
     
-
+                 
+    
     @staticmethod
     def validate_variants(chromosome, nuc_loc, ref_all, alt_all, name, clean_people, chrom_list):
-        print(ref_all)
-        unique_chrom_list = [chrom[0] for chrom in chrom_list]
-        if str(chromosome) not in unique_chrom_list:
-            print('Chromosome is invalid')
-        else:
-            for chrom in range(len(chrom_list)):
-                if int(nuc_loc) >= 0 and int(nuc_loc) <= int(chrom_list[chrom][1]):
-                    usable_allele_list = ['A', 'T', 'C', 'G']
-                    if ref_all in usable_allele_list:
-                        if alt_all in usable_allele_list:
-                            if ref_all != alt_all: 
-                                unique_people = [person[0] for person in clean_people]
-                                if name in unique_people:
-                                    good_var = chromosome, nuc_loc, ref_all, alt_all, name
-                                    return(good_var)
-                                else:
-                                    print('This person is not in you people list')
+        unique_people = [person[0] for person in clean_people]
+        unique_chrom = [chrom[0] for chrom in chrom_list]
+        bp_chrom = [chrom[1] for chrom in chrom_list]
+        if str(chromosome) in unique_chrom:
+            ind = unique_chrom.index(str(chromosome))
+            if int(nuc_loc) >= 0 and int(nuc_loc) <= int(bp_chrom[ind]):
+                usable_allele_list = ['A', 'T', 'C', 'G']
+                if ref_all in usable_allele_list:
+                    if alt_all in usable_allele_list:
+                        if ref_all != alt_all: 
+                            if name in unique_people:
+                                good_var = chromosome, nuc_loc, ref_all, alt_all, name
+                                return(good_var)
                             else:
-                                print('Reference and alternative alleles are the same')
+                                print('This person is not in your people list')
                         else:
-                            print('Alternative allele is invalid')
+                            print('Reference and alternatice alleles are the same')
                     else:
-                        print('Reference allele is invalid')
+                        print('Alternative allele is invalid')
                 else:
-                    print("BP is invalid")
+                    print('Reference allele is invalid')
+            else:
+                print('BP is invalid')
+        else:
+            print('Chromosome is invalid')
+                                
+                      
+                    
+                           
+        
 
                                     
 
