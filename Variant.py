@@ -38,20 +38,20 @@ class Variant(object):
                     if alt_all in usable_allele_list:
                         if ref_all != alt_all: 
                             if name in unique_people:
-                                good_var = chromosome, nuc_loc, ref_all, alt_all, name
+                                good_var = [chromosome, nuc_loc, ref_all, alt_all, name]
                                 return(good_var)
                             else:
-                                print('This person is not in your people list')
+                                print('This person is not in your people list', chromosome, nuc_loc, ref_all, alt_all, name)
                         else:
-                            print('Reference and alternatice alleles are the same')
+                            print('Reference and alternatice alleles are the same', chromosome, nuc_loc, ref_all, alt_all, name)
                     else:
-                        print('Alternative allele is invalid')
+                        print('Alternative allele is invalid', chromosome, nuc_loc, ref_all, alt_all, name)
                 else:
-                    print('Reference allele is invalid')
+                    print('Reference allele is invalid', chromosome, nuc_loc, ref_all, alt_all, name)
             else:
-                print('BP is invalid')
+                print('BP is invalid', chromosome, nuc_loc, ref_all, alt_all, name)
         else:
-            print('Chromosome is invalid')
+            print('Chromosome is invalid', chromosome, nuc_loc, ref_all, alt_all, name)
                                 
                       
                     

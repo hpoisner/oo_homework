@@ -23,10 +23,10 @@ class Person(object):
         self.variant_list.append(variant_instance)
 
     
-    def variant_list(self, variants_list):
-        for variants in range(len(variants_list)):
-            if self.name == variants_list[variant].name:
-                self.variant_list.append(variants_list[variants])
+    def add_variant_list(self, variants_list):
+        for variant_i in variants_list:
+            if self.name == variant_i.name:
+                self.variant_list.append(variant_i)
     
     
     def __init__(self, name, gender, father=None, mother=None):
@@ -49,7 +49,6 @@ class Person(object):
         self.mother = mother
         self.children = set()
         self.variant_list = []
-        self.add_single_variant()
         
         if gender == 'M' or gender == 'm' or gender == 'male':
             self.gender = 'male'
@@ -62,7 +61,7 @@ class Person(object):
         copy_variants = [item for item in self.variant_list]
         seen = set()
         seen_add = seen.add
-        bad_index = [idx for idx,item in ennumerate(all_variants) if item in seen or seen_add(item)]
+        bad_index = [idx for idx,item in enumerate(all_variants) if item in seen or seen_add(item)]
         for index in sorted(bad_index, reverse=True):
             print('Removing the repeated variant', copy_variants[index])
             del copy_variants[index]
@@ -78,15 +77,28 @@ class Person(object):
     def parents_in_people(people_list):
         clean_peoplelist = []
         unique_people = set([i[0] for i in  people_list])
+        valid_blanks = ["None", ""]
         for person in range(len(people_list)):
-            if people_list[person][2] in unique_people:
-                if people_list[person][3] in unique_people:
+            if people_list[person][2] in unique_people or people_list[person][2] in valid_blanks:
+                if people_list[person][3] in unique_people or people_list[person][3] in valid_blanks:
                     clean_peoplelist.append(people_list[person])
                 else:
-                    print("Mother is not in the People List.")
+                    print("Mother is not in the People List.", people_list[person])
             else:
-                print("Father is not in the People List")
+                print("Father is not in the People List", people_list[person])
         return(clean_peoplelist)
+    
+    @staticmethod
+    def no_dups(clean_people_1):
+        copy_names = [item[0] for item in clean_people_1]
+        copy_people = [item for item in clean_people_1]
+        seen = set()
+        seen_add = seen.add
+        bad_index = [idx for idx,item in enumerate(copy_names) if item in seen or seen_add(item)]
+        for index in sorted(bad_index, reverse=True):
+            print('Removing the repeated person', copy_people[index])
+            del copy_people[index]
+        return(copy_people)
 
 
 
@@ -128,11 +140,11 @@ class Person(object):
     # TODO: write 'remove_father' and 'remove_mother' methods that removes a person's father or mother,
     # and removes the person from the father's or mother's children. Test these methods.
     def remove_father(self):
-        self.father.children.remove(self.name)
+        self.father.children.remove(self)
         self.father = None
 
     def remove_mother(self):
-        self.mother.children.remove(self.name)
+        self.mother.children.remove(self)
         self.mother = None
 
 
@@ -302,7 +314,7 @@ def print_people(people):
 
         
 
-'''
+
 # create a Person Joe, and store it in the variable 'joe'
 joe = Person('Joe', 'm')
 # check joe's name
@@ -345,24 +357,34 @@ print('Joes half sister'); print_people(joe.half_siblings())
 
 ## Give Joe a Kid
 kid = Person('kid', 'female')
-kid = kid.set_father(joe)
+kid.set_father(joe)
 print('Joe self'); print_people(joe.ancestors(0))
 print([i.name for i in joe.children])
+print("Kid self"); print_people(kid.ancestors(0))
+## Removes kid's father 
+kid.remove_father()
+print("Kid is fatherless"); print_people(kid.ancestors(0))
+
 
 
 # play with an infinite ancestry depth limit
-inf = float('inf')
-print('joes ancestors: Mary, Joe Sr., Agnes, Old Joe, Maternal ggm'); print_people(joe.all_ancestors())
-print('joe and his ancestors'); print_people(joe.ancestors(0, inf))
+#inf = float('inf')
+#print('joes ancestors: Mary, Joe Sr., Agnes, Old Joe, Maternal ggm'); print_people(joe.all_ancestors())
+#print('joe and his ancestors'); print_people(joe.ancestors(0, inf))
 
+
+
+
+
+## DO NOT UNCOMMENT THESE TESTS SHOULD NOT BE RUN
 # make Joe his mother's son
-joe.mother.add_child(joe)
-print('joe.mother.sons():'); print_people(joe.mother.sons())
-print('joe.sons():', joe.sons())
+#joe.mother.add_child(joe)
+#print('joe.mother.sons():'); print_people(joe.mother.sons())
+#print('joe.sons():', joe.sons())
 
-kid = Person('kid', 'male', father=joe)
-joe.add_child(kid)
-'''
+#kid = Person('kid', 'male', father=joe)
+#joe.add_child(kid)
+
 
 
 

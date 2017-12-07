@@ -9,7 +9,8 @@ Person_L	M	Person_M	Person_N
 Person_M	M	Person_O	Person_P
 Person_N	Fast	None	None
 Person_O	m	None	None
-Person_P	f	None	None
-Person_Q	F	Person_R	Person_S
+Person_P	f	Person_S	None
+Person_Q	F	None	Person_R
 Person_R	M	None	None
+Person_S	F	None	
 Person_S	F	None	None
